@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/tools">
+
+    <item android:id="@+id/search_btn"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search_white_24dp"
+        app:showAsAction="collapseActionView|always"
+        app:queryHint="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        />
+
+    <item android:id="@+id/add_btn"
+        android:title="@string/add"
+        android:icon="@drawable/ic_add_location_white_24dp"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/add_market_btn"
+        android:title="@string/add"
+        android:icon="@drawable/ic_done"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+
+    <item android:id="@+id/delete_btn"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+
+    <item android:id="@+id/delete_btn_update"
+        android:title="@string/filter"
+        android:icon="@drawable/ic_delete"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+    <item android:id="@+id/update_btn"
+        android:title="@string/update"
+        android:icon="@drawable/ic_edit_black_24dp"
+        app:showAsAction="always"
+        android:visible="false"
+        />
+</menu>

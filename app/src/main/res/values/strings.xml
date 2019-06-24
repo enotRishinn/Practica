@@ -1,0 +1,33 @@
+<resources>
+    <string name="title_app">Find Map</string>
+    <string name="title_find">Находки</string>
+    <string name="title_settings">Настройки</string>
+    <string name="search">Поиск</string>
+    <string name="title_settings_fragment">Настройки</string>
+    <string name="title_map">Карта находок</string>
+    <string name="title_find_fragment">Мои находки</string>
+    <string name="add">Добавить находку</string>
+    <string name="filter">Фильтры</string>
+    <string name="comment">Комментарий</string>
+    <string name="add_new_find">Добавление новой находки</string>
+    <string name="close">Закрыть</string>
+    <string name="add_button">Добавить</string>
+    <string name="helper_comment">Комментарий к находке</string>
+    <string name="category">Категория находки</string>
+    <string name="seesight">Достопримечательности</string>
+    <string name="enterteinmant">Развлечения</string>
+    <string name="other">Другое</string>
+    <string name="next_button">Далее</string>
+    <string name="error">Поле не должно быть пустым!</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="ok">Применить</string>
+    <string name="filter_dialog">Категории на карте</string>
+    <string name="update">Обновить</string>
+    <string name="food">Еда и напитки</string>
+    <string name="shop">Магазины</string>
+    <string name="Sight">Достопримечательности</string>
+    <string name="nature">Природа</string>
+    <string name="Enterteinmant">Развлечения</string>
+    <string name="Other">Другое</string>
+    <string name="addd">Добавить</string>
+</resources>
