@@ -86,6 +86,7 @@ public class AddNewFindDB implements AddNewFindDBInterface {
     public List<? extends FindData> getFindsByQuery(String sql) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+
         try (Cursor cursor = db.rawQuery(sql, null)) {
             List<FindData> finds = new ArrayList<>();
             if (cursor.moveToFirst()) {
