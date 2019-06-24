@@ -1,3 +1,4 @@
+
 package com.practice.findmap.data;
 
 import android.content.ContentValues;
@@ -6,11 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.practice.findmap.domain.model.FindData;
 import com.practice.findmap.domain.model.MarkerCoordinates;
+import com.practice.findmap.domain.repository.AddNewFindDBInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddNewFindDB {
+public class AddNewFindDB implements AddNewFindDBInterface {
 
     public static DBHelper dbHelper;
 
@@ -19,11 +21,13 @@ public class AddNewFindDB {
         this.dbHelper = dbHelper;
     }
 
+    @Override
     public List<? extends FindData> findByComment(String comment) {
         String sql = "SELECT * FROM finds WHERE comment LIKE '%" + comment + "%';";
         return getFindsByQuery(sql);
     }
 
+    @Override
     public FindData findByCoordinates(MarkerCoordinates coordinates) {
         String sql = "SELECT * FROM finds WHERE latitude = " + coordinates.getLatitude()
                 + " and longitude = " + coordinates.getLongitude() + ";";
@@ -45,6 +49,7 @@ public class AddNewFindDB {
     }
 
 
+    @Override
     public void saveFind(FindData find) {
         ContentValues contentValues = new ContentValues();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -59,12 +64,14 @@ public class AddNewFindDB {
     }
 
 
+    @Override
     public void deleteById(int findId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete("finds", "id = " + findId, null);
     }
 
 
+    @Override
     public void updateFind(int id, String comment, String category) {
         ContentValues cv = new ContentValues();
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -75,7 +82,8 @@ public class AddNewFindDB {
         db.update("finds", cv, "id = ?", forID);
     }
 
-    private List<? extends FindData> getFindsByQuery(String sql) {
+    @Override
+    public List<? extends FindData> getFindsByQuery(String sql) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         try (Cursor cursor = db.rawQuery(sql, null)) {

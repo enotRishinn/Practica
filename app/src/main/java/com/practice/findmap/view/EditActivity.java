@@ -15,11 +15,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.practice.findmap.DI;
 import com.practice.findmap.R;
 import com.practice.findmap.data.AddNewFindDB;
 import com.practice.findmap.data.DBHelper;
 import com.practice.findmap.domain.model.FindData;
 import com.practice.findmap.domain.model.MarkerCoordinates;
+import com.practice.findmap.domain.repository.AddNewFindDBInterface;
 
 import java.util.Objects;
 
@@ -27,13 +29,13 @@ public class EditActivity extends AppCompatActivity {
 
     public static final String LAT = "LAT";
     public static final String LNG = "LNG";
-    private DBHelper dbHelper;
-    private AddNewFindDB addNewFindDB;
+    private AddNewFindDBInterface addNewFindDBInterface;
     private RadioGroup category;
     private String catFind;
     private TextInputEditText comment;
     private int currentID;
-
+    private Double latitude;
+    private Double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +43,16 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         setTitle("Редактирование находки");
 
-        dbHelper = new DBHelper(this);
-        addNewFindDB = new AddNewFindDB(dbHelper);
+        addNewFindDBInterface = DI.getInstance().getAddNewFindDBInterface();
 
         Bundle bundle = getIntent().getExtras();
         assert bundle != null;
 
-        double latitude = Double.parseDouble(Objects.requireNonNull(bundle.getString(LAT)));
-        double longitude = Double.parseDouble(Objects.requireNonNull(bundle.getString(LNG)));
+        latitude = Double.parseDouble(Objects.requireNonNull(bundle.getString(LAT)));
+        longitude = Double.parseDouble(Objects.requireNonNull(bundle.getString(LNG)));
 
         MarkerCoordinates coordinates = new MarkerCoordinates(latitude, longitude);
-        FindData find = addNewFindDB.findByCoordinates(coordinates);
+        FindData find = addNewFindDBInterface.findByCoordinates(coordinates);
 
         category = (RadioGroup) findViewById(R.id.radioGroupCategory);
         comment = (TextInputEditText) findViewById(R.id.add_comment);
@@ -71,8 +72,8 @@ public class EditActivity extends AppCompatActivity {
             error.setError(getString(R.string.error));
         } else {
             checkRadioGroup();
-
-            addNewFindDB.updateFind(currentID, comment.getText().toString(), catFind);
+            currentID = addNewFindDBInterface.findByCoordinates(new MarkerCoordinates(latitude, longitude)).getId();
+            addNewFindDBInterface.updateFind(currentID, comment.getText().toString(), catFind);
             System.out.println(currentID);
             System.out.println(comment.getText().toString());
             System.out.println(catFind);

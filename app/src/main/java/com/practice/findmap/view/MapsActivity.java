@@ -23,11 +23,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.practice.findmap.data.AddNewFindDB;
-import com.practice.findmap.data.DBHelper;
 import com.practice.findmap.domain.model.FindData;
 import com.practice.findmap.domain.model.MarkerCoordinates;
+import com.practice.findmap.DI;
 import com.practice.findmap.R;
+import com.practice.findmap.domain.repository.AddNewFindDBInterface;
 
 import java.util.List;
 
@@ -36,8 +36,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private SearchView searchView;
-    private DBHelper dbHelper;
-    private AddNewFindDB addNewFindDB;
+    //private DBHelper dbHelper;
+    private AddNewFindDBInterface addNewFindDBInterface;
     private final LatLng saintPetersburg = new LatLng(59.9386, 30.3141);;
     private static final int PERMISSION_REQUEST_CODE = 123;
     private MenuItem item_add;
@@ -64,8 +64,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
 
         requestPermission();
-        dbHelper = new DBHelper(this);
-        addNewFindDB = new AddNewFindDB(dbHelper);
+        addNewFindDBInterface = DI.getInstance().getAddNewFindDBInterface();
     }
 
 
@@ -100,7 +99,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 MarkerCoordinates coordinates = new MarkerCoordinates(positionlatLng.latitude,
                         positionlatLng.longitude);
 
-                findClick = addNewFindDB.findByCoordinates(coordinates);
+                findClick = addNewFindDBInterface.findByCoordinates(coordinates);
                 marker.setTitle(findClick.getComment());
                 marker.showInfoWindow();
                 clickMarker = marker;
@@ -187,7 +186,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void openDelete(FindData findClick, Marker marker) {
         deleteMarker(marker);
-        addNewFindDB.deleteById(findClick.getId());
+        addNewFindDBInterface.deleteById(findClick.getId());
         mainTopMenu();
     }
 
@@ -222,7 +221,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng addlatLng = addMarker.getPosition();
         MarkerCoordinates coordinates = new MarkerCoordinates(addlatLng.latitude, addlatLng.longitude);
         FindData find = new FindData (coordinates, comment, category);
-        addNewFindDB.saveFind(find);
+        addNewFindDBInterface.saveFind(find);
 
     }
 
@@ -233,7 +232,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
     public void findByTextInDB(String text) {
-        List<? extends FindData> finds = addNewFindDB.findByComment(text);
+        List<? extends FindData> finds = addNewFindDBInterface.findByComment(text);
         for (FindData find : finds) {
             MarkerCoordinates coordinates = find.getCoordinates();
             String find_cat = find.getCategory();

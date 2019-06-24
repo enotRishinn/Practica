@@ -18,7 +18,7 @@ public class FindData {
     }
 
     public FindData (MarkerCoordinates coordinates, String comment, String category) {
-        this(-1, coordinates, comment, category); // -1 or 0, if SQLite starts counting from 1
+        this(-1, coordinates, comment, category);
     }
 
     public MarkerCoordinates getCoordinates() {
